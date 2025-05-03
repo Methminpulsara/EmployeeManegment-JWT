@@ -1,14 +1,15 @@
 package edu.icet.ecom.controller;
 
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import edu.icet.ecom.service.JWTService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @CrossOrigin
-
+@RequiredArgsConstructor
 public class EmployeeController {
+
+    private final JWTService jwtService;
 
     @GetMapping
     public String getEmployee(){
@@ -17,6 +18,14 @@ public class EmployeeController {
 
     @PostMapping("/login")
     public String login(){
-        return "login";
+        return jwtService.getJWTToken();
     }
+
+    @GetMapping("/username")
+    public String getUserName(@RequestParam String token){
+        return jwtService.getUserName(token);
+    }
+
+
+
 }
