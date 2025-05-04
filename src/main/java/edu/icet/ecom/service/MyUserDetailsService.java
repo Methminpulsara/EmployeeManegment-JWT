@@ -1,5 +1,6 @@
 package edu.icet.ecom.service;
 
+import edu.icet.ecom.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ public class MyUserDetailsService implements org.springframework.security.core.u
 
 
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
 
 
 

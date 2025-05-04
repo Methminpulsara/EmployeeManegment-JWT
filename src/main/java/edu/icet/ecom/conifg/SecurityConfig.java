@@ -1,5 +1,6 @@
 package edu.icet.ecom.conifg;
 
+import edu.icet.ecom.repository.UserRepository;
 import edu.icet.ecom.service.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+
+    private final UserRepository repository;
 
     @Bean
     public SecurityFilterChain  securityFilterChain(HttpSecurity httpSecurity) throws Exception {
@@ -50,7 +54,7 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService(){
-        return new MyUserDetailsService(passwordEncoder());
+        return new MyUserDetailsService(passwordEncoder(),repository);
     }
 
 
