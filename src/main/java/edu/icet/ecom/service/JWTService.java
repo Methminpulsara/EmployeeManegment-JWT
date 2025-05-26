@@ -37,13 +37,14 @@ public class JWTService {
 
         try {
 
-            return Jwts.parser()
+            return Jwts.parserBuilder()
                     .setSigningKey(secretKey)
+                    .build()
                     .parseClaimsJws(token)
                     .getBody()
                     .getSubject();
         }catch (Exception e){
-            return "invalid token";
+            return null;
         }
     }
 
