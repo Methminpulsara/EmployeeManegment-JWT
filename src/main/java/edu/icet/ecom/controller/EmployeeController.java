@@ -16,13 +16,9 @@ public class EmployeeController {
         return "have";
     }
 
-    @PostMapping("/login")
-    public String login(){
-        return jwtService.getJWTToken();
-    }
 
-    @GetMapping("/username")
-    public String getUserName(@RequestParam String token){
+    @GetMapping("/username/{token}")
+    public String getUserName(@PathVariable String token){
         return jwtService.getUserName(token);
     }
 
