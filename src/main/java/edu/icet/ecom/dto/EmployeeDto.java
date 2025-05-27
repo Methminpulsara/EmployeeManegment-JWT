@@ -16,5 +16,4 @@ public class EmployeeDto {
     private String createdDate;
     private String modifiedDate;
 
-
 }
