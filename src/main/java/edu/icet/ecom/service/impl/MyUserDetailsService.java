@@ -1,4 +1,4 @@
-package edu.icet.ecom.service;
+package edu.icet.ecom.service.impl;
 
 import edu.icet.ecom.entity.UserEntitiy;
 import edu.icet.ecom.repository.UserRepository;
@@ -6,8 +6,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class MyUserDetailsService implements org.springframework.security.core.userdetails.UserDetailsService {

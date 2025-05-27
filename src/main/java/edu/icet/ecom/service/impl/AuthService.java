@@ -1,4 +1,4 @@
-package edu.icet.ecom.service;
+package edu.icet.ecom.service.impl;
 
 import edu.icet.ecom.dto.LoginRequestDto;
 import edu.icet.ecom.dto.LogingResponseDto;

@@ -2,7 +2,7 @@ package edu.icet.ecom.conifg;
 
 import edu.icet.ecom.fillter.JwtFilter;
 import edu.icet.ecom.repository.UserRepository;
-import edu.icet.ecom.service.MyUserDetailsService;
+import edu.icet.ecom.service.impl.MyUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package edu.icet.ecom.service;
+package edu.icet.ecom.service.impl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -9,7 +9,6 @@ import javax.crypto.SecretKey;
 import java.sql.Date;
 
 import java.util.Map;
-import java.util.Objects;
 
 @Service
 public class JWTService {

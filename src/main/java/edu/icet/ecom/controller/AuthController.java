@@ -5,10 +5,9 @@ import edu.icet.ecom.dto.LogingResponseDto;
 import edu.icet.ecom.dto.RegisterRequestDto;
 import edu.icet.ecom.dto.RegisterResponseDto;
 import edu.icet.ecom.entity.UserEntitiy;
-import edu.icet.ecom.service.AuthService;
+import edu.icet.ecom.service.impl.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

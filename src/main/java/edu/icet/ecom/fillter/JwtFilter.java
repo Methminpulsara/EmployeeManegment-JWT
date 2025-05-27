@@ -2,7 +2,7 @@ package edu.icet.ecom.fillter;
 
 import edu.icet.ecom.entity.UserEntitiy;
 import edu.icet.ecom.repository.UserRepository;
-import edu.icet.ecom.service.JWTService;
+import edu.icet.ecom.service.impl.JWTService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
