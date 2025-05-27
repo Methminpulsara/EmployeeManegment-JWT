@@ -2,6 +2,7 @@ package edu.icet.ecom.service.impl;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Service;
 import javax.crypto.KeyGenerator;
@@ -26,7 +27,23 @@ public class JWTService {
             throw new RuntimeException("JWT secret key is not valid");
         }
     }
+    public boolean isTokenValid(String token) {
+        try {
+            // Replace "your-secret-key" with the actual secret used to sign the token
+            Jwts.parserBuilder()
+                    .setSigningKey(getSigningKey())
+                    .build()
+                    .parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
+    private byte[] getSigningKey() {
+        byte[] keyBytes = Decoders.BASE64.decode("your-secret-key"); // Use your secret
+        return Keys.hmacShaKeyFor(keyBytes).getEncoded();
+    }
     public String getJWTToken(String userName, Map<String,Object> claims){
         return Jwts.builder()
                 .setClaims(claims)
