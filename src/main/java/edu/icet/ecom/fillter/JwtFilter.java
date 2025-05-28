@@ -62,7 +62,7 @@ public class JwtFilter extends OncePerRequestFilter {
             return;
         }
 
-        assert userData != null;
+
         UserDetails userDetails = User.builder()
                 .username(userData.getUsername())
                 .password(userData.getPassword())

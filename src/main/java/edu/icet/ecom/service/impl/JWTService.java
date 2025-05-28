@@ -31,7 +31,7 @@ public class JWTService {
         try {
             // Replace "your-secret-key" with the actual secret used to sign the token
             Jwts.parserBuilder()
-                    .setSigningKey(getSigningKey())
+                    .setSigningKey(secretKey)
                     .build()
                     .parseClaimsJws(token);
             return true;
@@ -40,10 +40,6 @@ public class JWTService {
         }
     }
 
-    private byte[] getSigningKey() {
-        byte[] keyBytes = Decoders.BASE64.decode("your-secret-key"); // Use your secret
-        return Keys.hmacShaKeyFor(keyBytes).getEncoded();
-    }
     public String getJWTToken(String userName, Map<String,Object> claims){
         return Jwts.builder()
                 .setClaims(claims)

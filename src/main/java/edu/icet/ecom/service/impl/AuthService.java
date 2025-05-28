@@ -43,10 +43,7 @@ public class AuthService {
     }
 
     public LogingResponseDto login(LoginRequestDto loginRequest){
-//      Boolean userPresent = isUserExist(loginRequest.getUsername());
-//      if(!userPresent){
-//          return new LogingResponseDto(null,null, "User not found", "if error");
-//      }
+
         try {
             authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(

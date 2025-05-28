@@ -18,8 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+import org.springframework.web.filter.CorsFilter;
+import java.util.List;
 
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(c -> c.disable())
-                .cors(c -> c.configurationSource(corsConfigurationSource())) // ✅ Enable CORS here
+                .cors(c -> {})
+                //.cors(c -> c.configurationSource(corsConfigurationSource())) // ✅ Enable CORS here
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(r ->
                         r.requestMatchers("/login", "/api/auth/login", "/api/auth/register").permitAll()
@@ -48,21 +50,34 @@ public class SecurityConfig {
                 .build();
     }
 
-    // SecurityConfig.java
-    // SecurityConfig.java
     @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:4200"));
-        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("Authorization", "Content-Type")); // ✅ Explicit headers
-        config.setExposedHeaders(List.of("Authorization")); // ✅ Expose headers to frontend
-        config.setAllowCredentials(true);
+    public CorsFilter corsFilter() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowCredentials(true);
+        corsConfig.setAllowedOrigins(List.of("http://localhost:4200")); // allow Angular
+        corsConfig.setAllowedHeaders(List.of("*")); // allow all headers
+        corsConfig.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // allow common methods
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", config);
-        return source;
+        source.registerCorsConfiguration("/**", corsConfig);
+        return new CorsFilter(source);
     }
+
+    // SecurityConfig.java
+    // SecurityConfig.java
+//    @Bean
+//    public CorsConfigurationSource corsConfigurationSource() {
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowedOrigins(List.of("http://localhost:4200"));
+//        config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//        config.setAllowedHeaders(List.of("Authorization", "Content-Type")); // ✅ Explicit headers
+//        config.setExposedHeaders(List.of("Authorization")); // ✅ Expose headers to frontend
+//        config.setAllowCredentials(true);
+//
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        source.registerCorsConfiguration("/**", config);
+//        return source;
+//    }
 
     //dao authentication provider overide
     @Bean

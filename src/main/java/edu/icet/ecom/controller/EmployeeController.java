@@ -9,9 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin
 @RequiredArgsConstructor
 @RequestMapping("/api/employee")
+@CrossOrigin
+
 public class EmployeeController {
 
     private final JWTService jwtService;

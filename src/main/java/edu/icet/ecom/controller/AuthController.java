@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
-@CrossOrigin("*")
+@CrossOrigin
 public class AuthController {
 
     private final AuthService authService;
