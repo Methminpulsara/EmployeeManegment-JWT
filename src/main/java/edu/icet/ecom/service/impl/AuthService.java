@@ -32,54 +32,56 @@ public class AuthService {
     private final ModelMapper mapper;
 
 
-  public List<UserEntitiy> getAllUsers(){
-      return userRepository.findAll();
-  }
-
-    public UserEntitiy createUser(RegisterRequestDto userData){
-      String encodedPassword = encoder.encode(userData.getPassword());
-      userData.setPassword(encodedPassword);
-       return userRepository.save(mapper.map(userData,UserEntitiy.class));
+    public List<UserEntitiy> getAllUsers() {
+        return userRepository.findAll();
     }
 
-    public LogingResponseDto login(LoginRequestDto loginRequest){
+    public UserEntitiy createUser(RegisterRequestDto userData) {
+        String encodedPassword = encoder.encode(userData.getPassword());
+        userData.setPassword(encodedPassword);
+        return userRepository.save(mapper.map(userData, UserEntitiy.class));
+    }
+
+    public LogingResponseDto login(LoginRequestDto loginRequest) {
 
         try {
             authenticationManager
                     .authenticate(new UsernamePasswordAuthenticationToken(
-                            loginRequest.getUsername(),loginRequest.getPassword()));
+                            loginRequest.getUsername(), loginRequest.getPassword()));
 
-        }catch (Exception e){
+        } catch (Exception e) {
             return new LogingResponseDto(
-                    null,null, "User not found", "if error");
+                    null, null, "User not found", "if error");
         }
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("role","User");
-        claims.put("email","Company@gmail.com");
+        claims.put("role", "User");
+        claims.put("email", "Company@gmail.com");
 
-        String token = jwtService.getJWTToken(loginRequest.getUsername(),claims);
+        String token = jwtService.getJWTToken(loginRequest.getUsername(), claims);
 
-        System.out.println(jwtService.getFieldFromToken(token,"role"));
+        System.out.println(jwtService.getFieldFromToken(token, "role"));
 
-       return new LogingResponseDto(
-               token, LocalDateTime.now(),null,"token  genarated success !");
+        return new LogingResponseDto(
+                token, LocalDateTime.now(), null, "token  genarated success !");
     }
 
-    public RegisterResponseDto register(RegisterRequestDto req){
-      if(isUserExist(req.getUsername())){
-          return new RegisterResponseDto(null,"User already exits the System");
-      }
+    public RegisterResponseDto register(RegisterRequestDto req) {
+        if (isUserExist(req.getUsername())) {
+            return new RegisterResponseDto(null, "User already exits the System");
+        }
         var userData = this.createUser(req);
-        if (userData.getUserId()==null){
-            return new RegisterResponseDto(null,"System error");
+        if (userData.getUserId() == null) {
+            return new RegisterResponseDto(null, "System error");
         }
 
-        return new RegisterResponseDto(String.format("User Created",userData.getUserId()),null);
+        return new RegisterResponseDto(String.format("User Created", userData.getUserId()), null);
 
     }
 
     private Boolean isUserExist(String username) {
-          return userRepository.findByUsername(username).isPresent();
+        return userRepository.findByUsername(username).isPresent();
     }
+
+
 }

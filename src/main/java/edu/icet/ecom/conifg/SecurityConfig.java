@@ -20,7 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-import java.util.List;
 
 import java.util.List;
 
@@ -38,14 +37,15 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(c -> c.disable())
-                .cors(c -> {}) // CORS config is fine
+                .cors(c -> {
+                }) // CORS config is fine
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(r -> r
                         .requestMatchers(
                                 "/", "/index.html",
                                 "/*.js", "/*.css", "/favicon.ico",
                                 "/assets/**",
-                                 "/api/auth/login", "/api/auth/register"
+                                "/api/auth/login", "/api/auth/register"
                         ).permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
@@ -68,20 +68,20 @@ public class SecurityConfig {
 
     //dao authentication provider overide
     @Bean
-    public DaoAuthenticationProvider authenticationProvider(){
-        DaoAuthenticationProvider provider =new DaoAuthenticationProvider();
+    public DaoAuthenticationProvider authenticationProvider() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService());
         provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12); //strength = sequrity eke vadi wenn gnnwa
     }
 
     @Bean
-    public UserDetailsService userDetailsService(){
+    public UserDetailsService userDetailsService() {
         return new MyUserDetailsService(repository);
     }
 

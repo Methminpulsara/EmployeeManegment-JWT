@@ -22,33 +22,31 @@ public class AuthController {
     private final AuthService authService;
 
     @GetMapping
-    public List<UserEntitiy> getAllUsers(){
+    public List<UserEntitiy> getAllUsers() {
         return authService.getAllUsers();
     }
 
     @PostMapping
-    public UserEntitiy createUser(@RequestBody RegisterRequestDto user){
+    public UserEntitiy createUser(@RequestBody RegisterRequestDto user) {
         return authService.createUser(user);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<LogingResponseDto> login(@RequestBody LoginRequestDto loginRequest){
-       LogingResponseDto res = authService.login(loginRequest);
-       if(res.getError()!=null){
-           return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
-       }
-       return ResponseEntity.status(HttpStatus.OK).body(res);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto req){
-        RegisterResponseDto res = authService.register(req);
-        if(res.getError()!=null){
+    public ResponseEntity<LogingResponseDto> login(@RequestBody LoginRequestDto loginRequest) {
+        LogingResponseDto res = authService.login(loginRequest);
+        if (res.getError() != null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
         }
         return ResponseEntity.status(HttpStatus.OK).body(res);
     }
 
-
+    @PostMapping("/register")
+    public ResponseEntity<RegisterResponseDto> register(@RequestBody RegisterRequestDto req) {
+        RegisterResponseDto res = authService.register(req);
+        if (res.getError() != null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(res);
+    }
 
 }
