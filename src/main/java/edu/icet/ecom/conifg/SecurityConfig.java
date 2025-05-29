@@ -34,21 +34,25 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
 
-
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return httpSecurity
                 .csrf(c -> c.disable())
-                .cors(c -> {})
-                //.cors(c -> c.configurationSource(corsConfigurationSource())) // ✅ Enable CORS here
+                .cors(c -> {}) // CORS config is fine
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .authorizeHttpRequests(r ->
-                        r.requestMatchers("/login", "/api/auth/login", "/api/auth/register").permitAll()
-                                .anyRequest().authenticated())
+                .authorizeHttpRequests(r -> r
+                        .requestMatchers(
+                                "/", "/index.html",
+                                "/*.js", "/*.css", "/favicon.ico",
+                                "/assets/**",
+                                "/login", "/api/auth/login", "/api/auth/register"
+                        ).permitAll()
+                        .anyRequest().authenticated())
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authenticationProvider(authenticationProvider())
                 .build();
     }
+
 
     @Bean
     public CorsFilter corsFilter() {
